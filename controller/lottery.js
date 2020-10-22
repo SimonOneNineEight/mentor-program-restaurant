@@ -3,9 +3,9 @@ const Prize = db.Prize
 const User = db.User
 
 const lotteryController = {
-  getAll: (req, res) => {
+  lottery: (req, res) => {
     Prize.findAll().then(prizes => {
-      res.json(prizes)
+      res.render('lottery', {prizes,})
     })
   },
 
@@ -30,32 +30,17 @@ const lotteryController = {
           imgUrl: 'https://support.discord.com/hc/user_images/p3ayzhZ2tMvRbQyMzD31TA.png',
           discription: '下次請努力！'
         }
-        console.log('no prize')
-        return res.json(result)
-      }
-      const resultId = prizeIdArr[randomIndex]
-      Prize.findByPk(resultId).then(prize => {
+        return res.render('result', {result,})
+      } else {
+        const resultId = prizeIdArr[randomIndex]
+        Prize.findByPk(resultId).then(prize => {
         result = {
           name: prize.name,
           imgUrl: prize.imgUrl,
           discription: prize.discription,
         }
-        return res.json(result)
-      })
-    })
-  },
-
-  admin:(req, res) => {
-    Prize.findAll().then(prizes => {
-      Prize.sum('percentage').then(percentage => {
-        let percentageError=''
-        if(percentage > 1) percentageError = '中獎機率超過 100%'
-        res.render('admin',{
-          prizes,
-          percentage: Math.round(percentage *= 100),
-          percentageError,
-        })
-      })
+        return res.render('result', {result,})
+      })}
     })
   },
 
@@ -162,11 +147,7 @@ const lotteryController = {
     })
   },
 
-  getlottery: (req, res) => {
-    //找出所有獎項
-    //把所有獎項的id放入陣列
-    //亂數出一個數字（0到1之間）
-    
+  getlottery: (req, res) => { 
     Prize.findAll().then(prizes => {
       const prizeIdArr = []
       const percentageArr = []
@@ -178,39 +159,6 @@ const lotteryController = {
       }
     })
   },
-
-  login: (req, res) => {
-    res.render('login')
-  },
-
-  handleLogin: (req, res) => {
-    const {username, password} = req.body
-    if(!username || !password) {
-      res.flash('errorMessage','請輸入帳號及密碼')
-    }
-    User.findOne({
-      where: {username,}
-    }).then(user => {
-      if(!user) {
-        req.flash('errorMessage', '不存在使用者')
-        return res.redirect('/login')
-      }
-      if(user.password !== password) {
-        req.flash('errorMessage', '帳號或密碼錯誤')
-        return res.redirect('/login')
-      }
-      req.session.userSessionId = user.id
-      res.redirect('/admin')
-    }).catch(error => {
-      console.log(error)
-      res.redirect('login')
-    })
-  },
-
-  logout: (req, res) => {
-    req.session.userSessionId = null
-    res.redirect('/admin')
-  }
 }
 
 module.exports = lotteryController

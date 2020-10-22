@@ -3,7 +3,11 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
 const cors = require('cors')
+
+const mainController = require('./controller/main')
 const lotteryController = require('./controller/lottery')
+const userController = require('./controller/user')
+const adminController = require('./controller/admin')
 
 const app = express()
 const port = process.env.PORT || 5002
@@ -26,19 +30,20 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/', lotteryController.getAll)
-app.get('/admin', lotteryController.admin)
-app.get('/login', lotteryController.login)
-app.get('/logout', lotteryController.logout)
+app.get('/', mainController.init)
+app.get('/admin', adminController.admin)
 app.get('/prize/:id', lotteryController.prize)
 app.get('/addPrize', lotteryController.addPrize)
-app.get('/lottery', lotteryController.getLottery)
+app.get('/lottery', lotteryController.lottery)
 app.get('/update/:id', lotteryController.updatePrize)
 app.get('/delete/:id', lotteryController.deletePrize)
+app.get('/login', userController.login)
+app.get('/logout', userController.logout)
 
-app.post('/login', lotteryController.handleLogin)
+app.post('/lottery', lotteryController.getLottery)
 app.post('/prize', lotteryController.handleAddPrize)
 app.post('/update/:id', lotteryController.handleUpdatePrize)
+app.post('/login', userController.handleLogin)
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
