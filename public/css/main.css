@@ -337,6 +337,11 @@ template {
   display: none;
 }
 
+*, nav, footer {
+  margin: 0;
+  padding: 0;
+}
+
 .navbar {
   position: sticky;
   z-index: 10;
@@ -464,59 +469,18 @@ template {
   padding: 0;
 }
 
-.navbar {
-  position: sticky;
-  z-index: 10;
-  top: 0;
-  box-shadow: -1.4px -1.4px 6px 0 #97a2a0;
-  display: flex;
-  height: 84px;
-  background: white;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 15px;
-}
-.navbar__list {
-  list-style: none;
-  margin: 0px;
-  padding: 0px;
-  display: flex;
-  font-family: MicrosoftJhengHei;
-  font-size: 18px;
-}
-.navbar__list li {
-  margin-left: 12px;
-  border-radius: 8px;
-  transition: background 0.5s;
-}
-.navbar__list li a {
-  text-decoration: none;
-  color: black;
-  padding: 12px 24px;
-  display: block;
-}
-.navbar__list li .active, .navbar__list li:hover {
-  background: #ff7286;
-}
-.navbar__list li.active a, .navbar__list li:hover a {
-  color: white;
-}
-
-.site-name a {
-  font-family: Questrial;
-  font-size: 36px;
-  color: #489846;
-  text-decoration: none;
-}
-
 .wrapper {
   max-width: 1920px;
+  margin: 0 auto;
+}
+.wrapper__menu {
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .banner {
   position: relative;
-  height: 580px;
+  height: 500px;
   background: url(../img/2.png) center/cover no-repeat;
 }
 .banner h1 {
@@ -533,12 +497,18 @@ template {
 }
 .banner:after {
   content: "";
+  width: 100%;
+  height: 500px;
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+}
+.banner__menu {
+  background: url(../img/f-title.png) center/cover no-repeat;
+  height: 250px;
 }
 
 .section {
@@ -561,6 +531,7 @@ template {
   padding: 0px 12px;
 }
 .section__images {
+  justify-content: center;
   display: flex;
   flex-direction: row;
   padding-top: 36px;
@@ -575,6 +546,32 @@ template {
   padding: 36px 0px 43px 0px;
   margin-left: 5%;
   margin-right: 5%;
+}
+
+.intro {
+  display: flex;
+  justify-content: center;
+  padding-top: 125px;
+}
+.intro__img {
+  background: url(../img/order-ad.png) center/cover no-repeat;
+  height: 400px;
+  width: 200px;
+  padding-left: 100px;
+}
+.intro__detail {
+  padding-left: 50px;
+  padding-top: 150px;
+  height: 400px;
+  width: 1000px;
+}
+.intro__detail__title {
+  color: #489846;
+  font-size: 26px;
+}
+.intro__detail__content {
+  padding-top: 40px;
+  font-size: 16px;
 }
 
 .button {
@@ -599,6 +596,45 @@ template {
 .btn-query {
   margin-left: 23px;
   background: #f9f9b5;
+}
+
+.menu {
+  text-align: center;
+}
+.menu__title {
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+.menu__list {
+  display: flex;
+  padding-top: 80px;
+  flex-wrap: wrap;
+}
+.menu__list__item {
+  padding-bottom: 80px;
+}
+.menu__list__item:not(:nth-child(3n-2)) {
+  padding-left: 50px;
+}
+.menu__list__img {
+  height: 300px;
+  width: 300px;
+  background: black;
+}
+.menu__list__name {
+  font-size: 18px;
+  color: #3e613d;
+  padding: 15px 0;
+}
+.menu__list__cart {
+  background: #f1fff2;
+  padding: 15px 100px;
+  border: 2px solid #3e613d;
+  margin-top: 15px;
+}
+.menu__list__cart a {
+  text-decoration: none;
+  color: #3e613d;
 }
 
 .comment {
@@ -670,64 +706,7 @@ template {
   display: none;
 }
 
-.footer__top {
-  background: #e8efee;
-  padding: 40px 0px 40px 0px;
-  color: color-primary-dark;
-}
-.footer__top .wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 106px;
-}
-.footer__top__info div {
-  font-family: MicrosoftJhengHei;
-  font-size: 14px;
-}
-.footer__top__info div + div {
-  margin-top: 10px;
-}
-
-.footer__site div {
-  font-family: Questrial;
-  font-size: 14px;
-  text-align: right;
-}
-.footer__site div + div {
-  margin-top: 10px;
-}
-
-.footer__bottom {
-  color: white;
-  background: #3e613d;
-  padding: 15px 0px;
-  text-align: center;
-  font-family: MicrosoftJhengHei;
-  font-size: 16px;
-}
-
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    height: 108px;
-    padding: 0px;
-    justify-content: space-between;
-  }
-  .navbar__list {
-    display: flex;
-    width: 100%;
-    padding: 0px;
-  }
-  .navbar__list li {
-    flex: 1;
-    margin-left: 0;
-    border-radius: 0;
-    text-align: center;
-  }
-  .navbar__site-name {
-    margin-top: 12px;
-  }
-
   .banner {
     height: 300px;
   }
@@ -745,25 +724,6 @@ template {
   }
   .section__images div {
     width: 100%;
-  }
-
-  .footer__top .wrapper {
-    flex-direction: column-reverse;
-    padding: 0px 30px;
-  }
-
-  .footer__site div {
-    font-family: Questrial;
-    font-size: 14px;
-    text-align: left;
-  }
-
-  .footer__info div {
-    margin-top: 15px;
-  }
-
-  .footer__bottom {
-    padding: 12px;
   }
 
   .comment {
